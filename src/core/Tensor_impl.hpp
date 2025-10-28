@@ -1,0 +1,6 @@
+#ifndef HORRIBLE_TENSOR_IMPL_HPP_
+#define HORRIBLE_TENSOR_IMPL_HPP_
+
+
+
+#endif          // HORRIBLE_TENSOR_IMPL_HPP_
