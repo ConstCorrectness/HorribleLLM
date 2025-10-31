@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=64", "wheel", "scikit-build-core>=0.5.1", "pybind11>=2.13"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "horriblellm"
+version = "0.1.0"
+description = "A delightfully cursed LLM engine built from scratch in C++ and Python."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Horrible Program" }]
+keywords = ["llm", "machine-learning", "ai", "c++", "pybind11"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+[project.urls]
+Homepage = "https://github.com/horribleprogram/HorribleLLM"
+
+[tool.scikit-build]
+wheel.packages = ["horriblellm"]
+wheel.exclude = ["tests", "benchmarks", "build"]
+cmake.minimum-version = "3.20"
+cmake.verbose = true

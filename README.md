@@ -3,6 +3,8 @@
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-blue.svg?logo=c%2B%2B)](https://en.cppreference.com/w/cpp/20)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
 [![Pybind11](https://img.shields.io/badge/Bindings-pybind11-orange?logo=python)](https://pybind11.readthedocs.io/)
+[![HorribleLLM CI](https://github.com/horribleprogram/HorribleLLM/actions/workflows/cmake.yml/badge.svg)](https://github.com/horribleprogram/HorribleLLM/actions/workflows/cmake.yml)
+
 
 > 🦴 *“A delightfully cursed large language model engine built from scratch.  
 > Made by Horrible, for Horrible, in the most Horrible way possible.”*
