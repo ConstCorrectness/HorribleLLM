@@ -4,8 +4,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(horriblellm, m) {
-    m.doc() = "HorribleLLM - a delightfully cursed LLM from scratch";
+PYBIND11_MODULE(_horriblellm, m) {
+    m.doc() = "HorribleLLM C++ core bindings";
     m.def("add", [](float a, float b) { return a + b; });
 }
-

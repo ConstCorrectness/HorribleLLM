@@ -1,11 +1,11 @@
 from importlib import import_module
 
-_core = import_module('horriblellm')
+# Import compiled C++ backend
+_core = import_module("._horriblellm", __package__)
 
+# Re-export bindings
 add = _core.add
-tensor_info = getattr(_core, 'tensor_info', lambda: 'no tensor info')
+tensor_info = getattr(_core, "tensor_info", lambda: "no tensor info yet")
 
-from .core import Tensor, zeros, ones
-from .model import HorribleModel
+__all__ = ["add", "tensor_info"]
 
-__all__ = ["add", "tensor_info", "Tensor", "zeros", "ones", "HorribleModel"]

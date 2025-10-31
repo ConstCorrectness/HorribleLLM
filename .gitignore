@@ -398,3 +398,6 @@ flycheck_*.el
 
 build/
 .vscode/
+
+Debug/
+Release/
