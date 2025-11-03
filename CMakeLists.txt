@@ -63,3 +63,46 @@ if(HORRIBLE_BUILD_BENCHMARKS)
   add_subdirectory(benchmarks)
 endif()
 
+# ============================================
+# 🧠 HorribleLLM Documentation Build System
+# ============================================
+
+# Find Python for running Sphinx
+if(NOT Python_EXECUTABLE)
+  find_package(Python3 COMPONENTS Interpreter REQUIRED)
+  set(Python_EXECUTABLE ${Python3_EXECUTABLE})
+endif()
+
+# Try to find Doxygen
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+  message(STATUS "Found Doxygen: ${DOXYGEN_EXECUTABLE}")
+  set(DOXYGEN_AVAILABLE TRUE)
+else()
+  message(WARNING "⚠️  Doxygen not found — C++ API docs will be skipped.")
+  set(DOXYGEN_AVAILABLE FALSE)
+endif()
+
+# Doxygen configuration template
+set(DOXYFILE_IN ${CMAKE_SOURCE_DIR}/Doxyfile.in)
+set(DOXYFILE_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+
+if(DOXYGEN_AVAILABLE AND EXISTS ${DOXYFILE_IN})
+  configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
+endif()
+
+# Documentation target
+add_custom_target(docs
+  COMMENT "Generating documentation (Doxygen + Sphinx)"
+  COMMAND ${CMAKE_COMMAND} -E echo "🧾 Checking dependencies..."
+  COMMAND ${Python_EXECUTABLE} -m pip install --upgrade sphinx myst-parser sphinx-rtd-theme breathe
+  # Run Doxygen if available
+  COMMAND ${CMAKE_COMMAND} -E echo "📗 Running Doxygen (if available)..."
+  COMMAND ${CMAKE_COMMAND} -E env DOXYGEN_AVAILABLE=${DOXYGEN_AVAILABLE}
+          ${CMAKE_COMMAND} -P "${CMAKE_SOURCE_DIR}/cmake/run_doxygen.cmake"
+  # Run Sphinx always (it can still generate Markdown & Python docs)
+  COMMAND ${CMAKE_COMMAND} -E echo "📘 Running Sphinx..."
+  COMMAND ${Python_EXECUTABLE} -m sphinx -b html ${CMAKE_SOURCE_DIR}/docs ${CMAKE_BINARY_DIR}/docs_html
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  VERBATIM
+)

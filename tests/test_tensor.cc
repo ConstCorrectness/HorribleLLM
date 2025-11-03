@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "horriblellm/Tensor.hpp"
+#include "horriblellm/horriblellm.hpp"
 
 
 // 
@@ -16,3 +17,16 @@ TEST(HorribleLLM, Initialization) {
     EXPECT_EQ(t.cols(), 1'326);
 }
 
+
+TEST(HorribleLLM, horrible_utils_TINFO) {
+    using namespace horrible::utils;
+    TINFO<int> t;
+
+    EXPECT_EQ(t.num_bits(), sizeof(int) * 8);
+    EXPECT_EQ(t.num_bytes(), sizeof(int));
+    
+    // EXPECT_EQ(is_not_pointer<int>, true);
+    // EXPECT_EQ(is_not_pointer<int * const *>, false);
+    // EXPECT_EQ(is_not_pointer<int const * const>, false);
+
+}

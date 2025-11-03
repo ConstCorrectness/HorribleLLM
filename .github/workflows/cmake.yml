@@ -1,4 +1,4 @@
-name: 🧠 HorribleLLM CI
+name: 🧠 HorribleLLM CMake CI
 
 on:
   push:
@@ -10,7 +10,6 @@ jobs:
   build-and-test:
     name: Build & Test (${{ matrix.os }} | Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
-
     strategy:
       fail-fast: false
       matrix:
@@ -53,3 +52,45 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           ./build/benchmarks/horrible_bench || echo "Skipping benchmarks"
+
+  docs:
+    name: 📚 Build & Deploy Docs
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # only on main branch
+    needs: build-and-test                 # wait for tests to pass first
+    permissions:
+      contents: write                     # needed for GitHub Pages deploy
+
+    steps:
+      - name: 🧾 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js (for Docusaurus)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 🐍 Setup Python (for Sphinx)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: 🧰 Install docs dependencies
+        run: |
+          pip install sphinx myst-parser sphinx-rtd-theme breathe doxygen
+          cd website && npm ci
+
+      - name: 🏗️ Build C++ docs (Doxygen + Sphinx)
+        run: |
+          cmake -B build
+          cmake --build build --target docs
+
+      - name: 🌐 Build website
+        working-directory: website
+        run: npm run build
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./website/build

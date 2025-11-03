@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ Template Instantiation</title>
+</head>
+<body>
+<svg>
+  <rect x="340" y="140" width="200" height="60" class="box" />
+  <text x="440" y="165" text-anchor="middle" class="box-text">Generated Code</text>
+  <text x="440" y="185" text-anchor="middle" class="box-text" font-weight="400" fontsize="12px">
+    int max(int a, int b) { return b < a ? a : b; }
+  </text>
+
+  <path class="arrow" d="M400 200 L440 240" />
+
+  <rect x="340" y="240" width="200" height="60" class="box" />
+  <text x="440" y="265" text-anchor="middle" class="box-text">Runtime Execution</text>
+  <text x="440" y="285" text-anchor="middle" class="box-text" font-weight="400" fontsize="12px">
+    Calls max&lt;int&gt; with (3, 5)
+  </text>
+
+  <text x="350" y="320" class="note" >
+    Template code is only compiled when instantiated with specific types.
+  </text>
+</svg>
+</body>
+</html>
